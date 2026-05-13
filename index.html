@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>🌟 AI Study Pal – Fun Learning for Kids!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --math: #ff6b6b;
+            --eng: #ffa94d;
+            --sci: #51cf66;
+            --his: #339af0;
+            --soc: #cc5de8;
+            --yellow: #ffd43b;
+            --bg: #fff9f0;
+            --card: #fff;
+            --dark: #2d3436;
+            --muted: #636e72;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            min-height: 100vh
+        }
+
+        /* NAV */
+        nav {
+            background: linear-gradient(135deg, #6c63ff, #48dbfb);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, .3);
+            position: sticky;
+            top: 0;
+            z-index: 100
+        }
+
+        .nav-logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+
+        .nav-tab {
+            background: rgba(255, 255, 255, .2);
+            border: 2px solid rgba(255, 255, 255, .4);
+            color: #fff;
+            padding: .4rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: .85rem;
+            transition: all .2s
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            background: #fff;
+            color: #6c63ff
+        }
+
+        /* PAGES */
+        .page {
+            display: none;
+            animation: fadeIn .4s ease
+        }
+
+        .page.active {
+            display: block
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* HOME */
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            background: linear-gradient(180deg, #e0d7ff 0%, var(--bg) 100%)
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 900;
+            color: #6c63ff;
+            margin-bottom: .5rem
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--muted);
+            margin-bottom: 2rem
+        }
+
+        .big-emoji {
+            font-size: 5rem;
+            animation: bounce 2s infinite
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-15px)
+            }
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.2rem;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto
+        }
+
+        .subject-btn {
+            border: none;
+            border-radius: 24px;
+            padding: 1.8rem 1rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .15)
+        }
+
+        .subject-btn:hover {
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .2)
+        }
+
+        .subject-btn .s-emoji {
+            font-size: 2.8rem
+        }
+
+        .math-btn {
+            background: linear-gradient(135deg, #ff6b6b, #f03e3e)
+        }
+
+        .eng-btn {
+            background: linear-gradient(135deg, #ffa94d, #e67700)
+        }
+
+        .sci-btn {
+            background: linear-gradient(135deg, #51cf66, #2f9e44)
+        }
+
+        .his-btn {
+            background: linear-gradient(135deg, #339af0, #1971c2)
+        }
+
+        .soc-btn {
+            background: linear-gradient(135deg, #cc5de8, #862e9c)
+        }
+
+        /* SECTION HEADER */
+        .sec-header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem
+        }
+
+        .sec-header h2 {
+            font-size: 1.8rem;
+            font-weight: 900
+        }
+
+        .back-btn {
+            background: #6c63ff;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: .5rem 1.2rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: .9rem;
+            transition: background .2s
+        }
+
+        .back-btn:hover {
+            background: #5a52d5
+        }
+
+        /* TABS */
+        .subject-tabs {
+            display: flex;
+            gap: .5rem;
+            padding: .5rem 2rem 0;
+            flex-wrap: wrap
+        }
+
+        .stab {
+            background: #f1f3f5;
+            border: none;
+            border-radius: 50px 50px 0 0;
+            padding: .6rem 1.4rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: .9rem;
+            color: var(--muted);
+            transition: all .2s
+        }
+
+        .stab.active {
+            color: #fff;
+            background: #6c63ff
+        }
+
+        /* CONTENT PANELS */
+        .panel {
+            display: none;
+            padding: 1.5rem 2rem
+        }
+
+        .panel.active {
+            display: block
+        }
+
+        /* QUIZ */
+        .quiz-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+            max-width: 700px;
+            margin: 0 auto
+        }
+
+        .quiz-progress {
+            background: #e9ecef;
+            border-radius: 50px;
+            height: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden
+        }
+
+        .quiz-bar {
+            height: 100%;
+            border-radius: 50px;
+            background: linear-gradient(90deg, #6c63ff, #48dbfb);
+            transition: width .4s
+        }
+
+        .quiz-q {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--dark)
+        }
+
+        .quiz-q .q-emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: .5rem
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .8rem
+        }
+
+        .opt-btn {
+            background: #f8f9fa;
+            border: 3px solid #e9ecef;
+            border-radius: 16px;
+            padding: 1rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all .2s;
+            text-align: left
+        }
+
+        .opt-btn:hover {
+            border-color: #6c63ff;
+            background: #f0eeff;
+            transform: scale(1.02)
+        }
+
+        .opt-btn.correct {
+            background: #d3f9d8;
+            border-color: #51cf66;
+            color: #2f9e44
+        }
+
+        .opt-btn.wrong {
+            background: #ffe3e3;
+            border-color: #ff6b6b;
+            color: #c92a2a
+        }
+
+        .opt-btn:disabled {
+            cursor: not-allowed
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            display: none
+        }
+
+        .quiz-feedback.show {
+            display: block
+        }
+
+        .quiz-feedback.good {
+            background: #d3f9d8;
+            color: #2f9e44
+        }
+
+        .quiz-feedback.bad {
+            background: #ffe3e3;
+            color: #c92a2a
+        }
+
+        .quiz-nav {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center
+        }
+
+        .q-btn {
+            background: linear-gradient(135deg, #6c63ff, #48dbfb);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: .7rem 2rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform .2s
+        }
+
+        .q-btn:hover {
+            transform: scale(1.05)
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 2rem
+        }
+
+        .score-box .score-num {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #6c63ff
+        }
+
+        .score-box .trophy {
+            font-size: 5rem;
+            animation: bounce 1.5s infinite
+        }
+
+        .score-msg {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 1rem 0
+        }
+
+        .stars {
+            font-size: 2.5rem;
+            margin: .5rem 0
+        }
+
+        /* TIMETABLE */
+        .tt-grid {
+            display: grid;
+            grid-template-columns: auto repeat(5, 1fr);
+            gap: 4px;
+            background: #e9ecef;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto;
+            max-width: 900px
+        }
+
+        .tt-head {
+            background: #6c63ff;
+            color: #fff;
+            font-weight: 800;
+            padding: .7rem .5rem;
+            text-align: center;
+            font-size: .85rem
+        }
+
+        .tt-time {
+            background: #f8f9fa;
+            font-weight: 700;
+            font-size: .8rem;
+            padding: .7rem .4rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted)
+        }
+
+        .tt-cell {
+            background: #fff;
+            border-radius: 0;
+            position: relative;
+            min-height: 60px
+        }
+
+        .tt-cell select {
+            width: 100%;
+            height: 100%;
+            min-height: 60px;
+            border: none;
+            background: transparent;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: .8rem;
+            cursor: pointer;
+            padding: .3rem;
+            text-align: center;
+            appearance: none;
+            -webkit-appearance: none
+        }
+
+        .tt-cell.math-c {
+            background: #fff5f5
+        }
+
+        .tt-cell.eng-c {
+            background: #fff8f0
+        }
+
+        .tt-cell.sci-c {
+            background: #f4fce3
+        }
+
+        .tt-cell.his-c {
+            background: #e7f5ff
+        }
+
+        .tt-cell.soc-c {
+            background: #f8f0fc
+        }
+
+        .tt-cell.free-c {
+            background: #f8f9fa
+        }
+
+        .tt-actions {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap
+        }
+
+        .tt-btn {
+            padding: .7rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: .9rem;
+            transition: transform .2s
+        }
+
+        .tt-btn:hover {
+            transform: scale(1.05)
+        }
+
+        .tt-save {
+            background: linear-gradient(135deg, #51cf66, #2f9e44);
+            color: #fff
+        }
+
+        .tt-clear {
+            background: #f1f3f5;
+            color: var(--dark)
+        }
+
+        .tt-print {
+            background: linear-gradient(135deg, #339af0, #1971c2);
+            color: #fff
+        }
+
+        .tt-legend {
+            display: flex;
+            gap: .8rem;
+            flex-wrap: wrap;
+            margin-top: 1rem
+        }
+
+        .leg-item {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .85rem;
+            font-weight: 700
+        }
+
+        .leg-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%
+        }
+
+        /* FEEDBACK */
+        .feedback-wrap {
+            max-width: 700px;
+            margin: 0 auto
+        }
+
+        .mood-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap
+        }
+
+        .mood-btn {
+            background: #f8f9fa;
+            border: 3px solid #e9ecef;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all .2s;
+            text-align: center
+        }
+
+        .mood-btn:hover,
+        .mood-btn.selected {
+            border-color: #6c63ff;
+            background: #f0eeff;
+            transform: scale(1.08)
+        }
+
+        .mood-btn .mood-e {
+            font-size: 2.2rem;
+            display: block
+        }
+
+        .feedback-form {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08)
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: .4rem;
+            font-size: .95rem
+        }
+
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: .7rem 1rem;
+            font-family: 'Nunito', sans-serif;
+            font-size: .95rem;
+            transition: border .2s;
+            outline: none
+        }
+
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #6c63ff
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #6c63ff, #48dbfb);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: .9rem 2.5rem;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, .3)
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, .4)
+        }
+
+        .ai-feedback-box {
+            background: linear-gradient(135deg, #f0eeff, #e7f5ff);
+            border: 2px solid #6c63ff;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: none
+        }
+
+        .ai-feedback-box.show {
+            display: block;
+            animation: fadeIn .5s
+        }
+
+        .ai-fb-header {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #6c63ff;
+            margin-bottom: .8rem
+        }
+
+        .ai-fb-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--dark)
+        }
+
+        .feedback-history {
+            margin-top: 2rem
+        }
+
+        .feedback-history h3 {
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-size: 1.1rem
+        }
+
+        .fb-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            margin-bottom: .8rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+            border-left: 4px solid #6c63ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem
+        }
+
+        .fb-card p {
+            font-size: .9rem;
+            color: var(--muted)
+        }
+
+        .fb-card strong {
+            color: var(--dark)
+        }
+
+        /* BADGES/REWARDS */
+        .badges-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 1rem 0
+        }
+
+        .badge {
+            background: #fff;
+            border-radius: 16px;
+            padding: .8rem 1.2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+            font-size: 1.8rem;
+            min-width: 80px
+        }
+
+        .badge span {
+            display: block;
+            font-size: .7rem;
+            font-weight: 700;
+            color: var(--muted);
+            margin-top: .2rem
+        }
+
+        .badge.earned {
+            border: 2px solid var(--yellow);
+            background: #fffaeb
+        }
+
+        .badge.locked {
+            opacity: .4;
+            filter: grayscale(1)
+        }
+
+        /* PROGRESS OVERVIEW */
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem 2rem
+        }
+
+        .prog-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .08)
+        }
+
+        .prog-card .p-emoji {
+            font-size: 2rem;
+            margin-bottom: .4rem
+        }
+
+        .prog-card .p-name {
+            font-weight: 800;
+            font-size: .9rem;
+            margin-bottom: .5rem
+        }
+
+        .prog-bar-wrap {
+            background: #e9ecef;
+            border-radius: 50px;
+            height: 10px;
+            overflow: hidden
+        }
+
+        .prog-bar {
+            height: 100%;
+            border-radius: 50px;
+            transition: width .5s
+        }
+
+        .prog-card .p-score {
+            font-size: .8rem;
+            color: var(--muted);
+            margin-top: .3rem;
+            font-weight: 700
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:600px) {
+            .options {
+                grid-template-columns: 1fr
+            }
+
+            .tt-grid {
+                font-size: .7rem
+            }
+
+            .tt-head,
+            .tt-time {
+                padding: .4rem .2rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <span class="nav-logo">🌟 Study Pal</span>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showPage('home')">🏠 Home</button>
+            <button class="nav-tab" onclick="showPage('quiz')">📝 Quiz</button>
+            <button class="nav-tab" onclick="showPage('timetable')">📅 Timetable</button>
+            <button class="nav-tab" onclick="showPage('feedback')">💬 Feedback</button>
+        </div>
+    </nav>
+
+    <!-- ============ HOME ============ -->
+    <div class="page active" id="page-home">
+        <div class="hero">
+            <div class="big-emoji">🚀</div>
+            <h1>Welcome to Study Pal!</h1>
+            <p>Learning is fun! Pick a subject and start your adventure 🎉</p>
+        </div>
+
+        <!-- Progress Overview -->
+        <div class="progress-overview" id="progress-overview"></div>
+
+        <!-- Badges -->
+        <div style="padding:0 2rem 1rem">
+            <h2 style="font-weight:900;font-size:1.3rem;margin-bottom:.8rem">🏆 Your Badges</h2>
+            <div class="badges-row" id="badges-row"></div>
+        </div>
+
+        <h2 style="text-align:center;font-weight:900;font-size:1.4rem;margin:1rem 0 .5rem">Choose a Subject to Quiz!
+        </h2>
+        <div class="subject-grid">
+            <button class="subject-btn math-btn" onclick="startQuiz('math')">
+                <span class="s-emoji">➕</span>Maths
+            </button>
+            <button class="subject-btn eng-btn" onclick="startQuiz('english')">
+                <span class="s-emoji">📚</span>English
+            </button>
+            <button class="subject-btn sci-btn" onclick="startQuiz('science')">
+                <span class="s-emoji">🔬</span>Science
+            </button>
+            <button class="subject-btn his-btn" onclick="startQuiz('history')">
+                <span class="s-emoji">🏛️</span>History
+            </button>
+            <button class="subject-btn soc-btn" onclick="startQuiz('social')">
+                <span class="s-emoji">🌍</span>Social
+            </button>
+        </div>
+    </div>
+
+    <!-- ============ QUIZ ============ -->
+    <div class="page" id="page-quiz">
+        <div class="sec-header">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2 id="quiz-title">Quiz</h2>
+        </div>
+
+        <!-- Subject quick-switch tabs -->
+        <div class="subject-tabs">
+            <button class="stab" onclick="startQuiz('math')">➕ Maths</button>
+            <button class="stab" onclick="startQuiz('english')">📚 English</button>
+            <button class="stab" onclick="startQuiz('science')">🔬 Science</button>
+            <button class="stab" onclick="startQuiz('history')">🏛️ History</button>
+            <button class="stab" onclick="startQuiz('social')">🌍 Social</button>
+        </div>
+
+        <div class="panel active" id="quiz-panel">
+            <div class="quiz-box" id="quiz-container">
+                <p style="text-align:center;color:var(--muted);font-weight:700">Pick a subject above to start! 👆</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TIMETABLE ============ -->
+    <div class="page" id="page-timetable">
+        <div class="sec-header">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>📅 My Weekly Timetable</h2>
+        </div>
+        <div style="padding:0 2rem">
+            <p style="color:var(--muted);font-weight:600;margin-bottom:1rem">Build your perfect study schedule! Select
+                subjects for each slot 🗓️</p>
+            <div class="tt-actions">
+                <button class="tt-btn tt-save" onclick="saveTimetable()">💾 Save</button>
+                <button class="tt-btn tt-clear" onclick="clearTimetable()">🗑️ Clear</button>
+                <button class="tt-btn tt-print" onclick="window.print()">🖨️ Print</button>
+            </div>
+            <div class="tt-grid" id="tt-grid"></div>
+            <div class="tt-legend">
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:#ff6b6b"></div>Maths
+                </div>
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:#ffa94d"></div>English
+                </div>
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:#51cf66"></div>Science
+                </div>
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:#339af0"></div>History
+                </div>
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:#cc5de8"></div>Social
+                </div>
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:#ced4da"></div>Free
+                </div>
+            </div>
+            <div id="tt-msg" style="margin-top:1rem;font-weight:700;color:#51cf66;display:none">✅ Timetable saved!</div>
+        </div>
+    </div>
+
+    <!-- ============ FEEDBACK ============ -->
+    <div class="page" id="page-feedback">
+        <div class="sec-header">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>💬 My Feedback</h2>
+        </div>
+        <div style="padding:0 2rem 2rem">
+            <div class="feedback-wrap">
+                <!-- Mood -->
+                <h3 style="font-weight:800;font-size:1.1rem;margin-bottom:.5rem">How are you feeling today? 😊</h3>
+                <div class="mood-row">
+                    <button class="mood-btn" onclick="selectMood(this,'😃','Great')"><span
+                            class="mood-e">😃</span>Great!</button>
+                    <button class="mood-btn" onclick="selectMood(this,'😊','Good')"><span
+                            class="mood-e">😊</span>Good</button>
+                    <button class="mood-btn" onclick="selectMood(this,'😐','Okay')"><span
+                            class="mood-e">😐</span>Okay</button>
+                    <button class="mood-btn" onclick="selectMood(this,'😞','Tired')"><span
+                            class="mood-e">😞</span>Tired</button>
+                    <button class="mood-btn" onclick="selectMood(this,'😕','Confused')"><span
+                            class="mood-e">😕</span>Confused</button>
+                </div>
+
+                <!-- Form -->
+                <div class="feedback-form">
+                    <div class="form-group">
+                        <label>📖 Which subject did you study?</label>
+                        <select id="fb-subject">
+                            <option value="">-- Select Subject --</option>
+                            <option>Maths</option>
+                            <option>English</option>
+                            <option>Science</option>
+                            <option>History</option>
+                            <option>Social</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>⭐ How difficult was it? (1 = Easy, 5 = Hard)</label>
+                        <select id="fb-difficulty">
+                            <option value="1">1 – Very Easy 😄</option>
+                            <option value="2">2 – Easy 🙂</option>
+                            <option value="3">3 – Medium 😐</option>
+                            <option value="4">4 – Hard 😓</option>
+                            <option value="5">5 – Very Hard 😤</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>💭 What did you learn today?</label>
+                        <textarea id="fb-notes" rows="3" placeholder="Write something you learned..."></textarea>
+                    </div>
+                    <button class="submit-btn" onclick="submitFeedback()">🚀 Get AI Feedback!</button>
+
+                    <!-- AI Response -->
+                    <div class="ai-feedback-box" id="ai-feedback-box">
+                        <div class="ai-fb-header">🤖 AI Study Pal says:</div>
+                        <div class="ai-fb-text" id="ai-fb-text"></div>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="feedback-history" id="fb-history"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── DATA ──────────────────────────────────────────────
+        const QUESTIONS = {
+            math: [
+                { q: "🔢 What is 12 × 8?", e: "➕", opts: ["96", "88", "104", "112"], ans: 0 },
+                { q: "🍕 What is 3/4 + 1/4?", e: "🔢", opts: ["1", "2", "0.5", "1.5"], ans: 0 },
+                { q: "📐 What is the area of a square with side 5?", e: "📐", opts: ["25", "20", "10", "15"], ans: 0 },
+                { q: "➗ What is 144 ÷ 12?", e: "➗", opts: ["12", "14", "11", "13"], ans: 0 },
+                { q: "🔢 What is 25% of 200?", e: "💯", opts: ["50", "25", "75", "100"], ans: 0 },
+                { q: "🔢 What is 7²?", e: "🔢", opts: ["49", "42", "56", "14"], ans: 0 },
+                { q: "🔢 How many sides does a hexagon have?", e: "⬡", opts: ["6", "5", "7", "8"], ans: 0 },
+                { q: "🔢 What is 1000 - 347?", e: "➖", opts: ["653", "663", "643", "673"], ans: 0 },
+                { q: "🔢 What is the next prime after 7?", e: "🔢", opts: ["11", "9", "10", "13"], ans: 0 },
+                { q: "🔢 What is 15% of 60?", e: "💯", opts: ["9", "6", "12", "15"], ans: 0 },
+            ],
+            english: [
+                { q: "📚 Which is a noun in: 'The cat sat on the mat'?", e: "📚", opts: ["cat", "sat", "the", "on"], ans: 0 },
+                { q: "📝 Which word is a synonym of 'happy'?", e: "😊", opts: ["joyful", "sad", "angry", "tired"], ans: 0 },
+                { q: "📖 What is the plural of 'child'?", e: "👦", opts: ["children", "childs", "childen", "child"], ans: 0 },
+                { q: "✏️ Which sentence is correct?", e: "✏️", opts: ["She runs fast", "She run fast", "She running fast", "She runned fast"], ans: 0 },
+                { q: "📝 What does the prefix 'un-' mean?", e: "📝", opts: ["not", "again", "before", "after"], ans: 0 },
+                { q: "📚 Which is an adjective: 'The big red ball'?", e: "📚", opts: ["big", "ball", "the", "is"], ans: 0 },
+                { q: "📖 How many vowels are in the word 'beautiful'?", e: "🔤", opts: ["5", "4", "6", "3"], ans: 0 },
+                { q: "✏️ Which is the antonym of 'ancient'?", e: "✏️", opts: ["modern", "old", "historic", "past"], ans: 0 },
+                { q: "📝 What punctuation ends a question?", e: "❓", opts: ["?", "!", ".", "..."], ans: 0 },
+                { q: "📚 Which word is a verb: 'The dog barks loudly'?", e: "📚", opts: ["barks", "dog", "loudly", "the"], ans: 0 },
+            ],
+            science: [
+                { q: "🔬 What gas do plants absorb from the air?", e: "🌿", opts: ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"], ans: 0 },
+                { q: "🌡️ What is the boiling point of water?", e: "💧", opts: ["100°C", "90°C", "80°C", "110°C"], ans: 0 },
+                { q: "🪐 Which planet is closest to the Sun?", e: "☀️", opts: ["Mercury", "Venus", "Earth", "Mars"], ans: 0 },
+                { q: "🔬 What is the powerhouse of the cell?", e: "🔬", opts: ["Mitochondria", "Nucleus", "Ribosome", "Cell wall"], ans: 0 },
+                { q: "💡 What force keeps us on the ground?", e: "🍎", opts: ["Gravity", "Magnetism", "Friction", "Tension"], ans: 0 },
+                { q: "🌈 How many colours are in a rainbow?", e: "🌈", opts: ["7", "6", "8", "5"], ans: 0 },
+                { q: "🦴 How many bones does an adult have?", e: "🦴", opts: ["206", "208", "200", "212"], ans: 0 },
+                { q: "🌡️ What is H₂O?", e: "💧", opts: ["Water", "Salt", "Sugar", "Acid"], ans: 0 },
+                { q: "🔬 Which organ pumps blood?", e: "❤️", opts: ["Heart", "Lungs", "Brain", "Liver"], ans: 0 },
+                { q: "🌙 How long does Earth take to orbit the Sun?", e: "🌍", opts: ["365 days", "300 days", "400 days", "30 days"], ans: 0 },
+            ],
+            history: [
+                { q: "🏛️ Who built the Great Wall of China?", e: "🏯", opts: ["Emperor Qin Shi Huang", "Genghis Khan", "Kublai Khan", "Marco Polo"], ans: 0 },
+                { q: "🗽 Who wrote the Declaration of Independence?", e: "🗽", opts: ["Thomas Jefferson", "George Washington", "Abraham Lincoln", "Benjamin Franklin"], ans: 0 },
+                { q: "🌍 When did World War II end?", e: "⚔️", opts: ["1945", "1939", "1942", "1950"], ans: 0 },
+                { q: "🏛️ Who was the first President of USA?", e: "🇺🇸", opts: ["George Washington", "John Adams", "Thomas Jefferson", "James Madison"], ans: 0 },
+                { q: "📜 What did Mahatma Gandhi fight for?", e: "✌️", opts: ["India's independence", "War victories", "Monarchy", "Colonisation"], ans: 0 },
+                { q: "🏛️ Ancient Olympics were held in which country?", e: "🏅", opts: ["Greece", "Rome", "Egypt", "Persia"], ans: 0 },
+                { q: "👑 Who was the first woman Pharaoh of Egypt?", e: "🐍", opts: ["Hatshepsut", "Cleopatra", "Nefertiti", "Isis"], ans: 0 },
+                { q: "🌍 Columbus reached America in which year?", e: "⛵", opts: ["1492", "1500", "1488", "1510"], ans: 0 },
+                { q: "🏛️ Where was Mahatma Gandhi born?", e: "🌏", opts: ["Porbandar", "Mumbai", "Delhi", "Kolkata"], ans: 0 },
+                { q: "📜 Which civilization built the Pyramids?", e: "🔺", opts: ["Egyptian", "Greek", "Roman", "Persian"], ans: 0 },
+            ],
+            social: [
+                { q: "🌍 How many continents are there on Earth?", e: "🌍", opts: ["7", "6", "5", "8"], ans: 0 },
+                { q: "🏙️ What is the capital of India?", e: "🇮🇳", opts: ["New Delhi", "Mumbai", "Chennai", "Kolkata"], ans: 0 },
+                { q: "🌊 What is the largest ocean on Earth?", e: "🌊", opts: ["Pacific", "Atlantic", "Indian", "Arctic"], ans: 0 },
+                { q: "🗺️ Which is the largest country by area?", e: "🗺️", opts: ["Russia", "Canada", "USA", "China"], ans: 0 },
+                { q: "🌍 Which river is the longest in the world?", e: "🏞️", opts: ["Nile", "Amazon", "Yangtze", "Mississippi"], ans: 0 },
+                { q: "🌍 Which country has the most population?", e: "👥", opts: ["India", "China", "USA", "Indonesia"], ans: 0 },
+                { q: "🗺️ Which is the smallest country in the world?", e: "⛪", opts: ["Vatican City", "Monaco", "San Marino", "Liechtenstein"], ans: 0 },
+                { q: "🌍 Mount Everest is in which country?", e: "⛰️", opts: ["Nepal", "India", "China", "Bhutan"], ans: 0 },
+                { q: "🌳 What is the Amazon Rainforest famous for?", e: "🌿", opts: ["Biodiversity", "Deserts", "Ice caps", "Volcanoes"], ans: 0 },
+                { q: "🌍 Which is the largest desert in the world?", e: "🏜️", opts: ["Sahara", "Gobi", "Arctic", "Arabian"], ans: 0 },
+            ]
+        };
+
+        const SUBJECT_META = {
+            math: { label: "Maths", emoji: "➕", color: "#ff6b6b" },
+            english: { label: "English", emoji: "📚", color: "#ffa94d" },
+            science: { label: "Science", emoji: "🔬", color: "#51cf66" },
+            history: { label: "History", emoji: "🏛️", color: "#339af0" },
+            social: { label: "Social", emoji: "🌍", color: "#cc5de8" },
+        };
+
+        const AI_FEEDBACK = {
+            Great: {
+                easy: ["You're a superstar! 🌟 Easy stuff is no match for you!", "Amazing! You breezed through today! Keep shining! ✨"],
+                medium: ["Brilliant work! 🎉 You tackled it like a champion!", "Great job! You're really getting it! 🚀"],
+                hard: ["WOW! You found it hard but kept going — that's a HERO! 🦸", "Incredible! Pushing through tough stuff makes you stronger! 💪"]
+            },
+            Good: {
+                easy: ["Good going! 👍 You're on the right track, keep it up!", "Nice work! Easy days are great to build confidence! 😊"],
+                medium: ["Good effort! 🙌 A little more practice and you'll nail it!", "Well done! Keep studying and you'll be a pro! 📚"],
+                hard: ["Good for you for trying something hard! 🏅 Hard work pays off!", "Keep at it! Hard topics become easy with practice! 💡"]
+            },
+            Okay: {
+                easy: ["That's okay! 😊 Every day is a fresh start!", "It's alright! Even on okay days, learning adds up! 🌱"],
+                medium: ["Okay days happen! Try reviewing the topic again tomorrow. 📖", "You showed up and that matters! Rest and try again! 🌙"],
+                hard: ["Hard days with tough topics — you're so brave for trying! 🦁", "Don't worry! Even the smartest people find some things hard! 🧠"]
+            },
+            Tired: {
+                easy: ["You studied even when tired — that's real dedication! 🌟", "Rest up after! Your brain needs sleep to remember things! 💤"],
+                medium: ["Take a short break and come back refreshed! You can do it! ☕", "Tired but trying! You deserve a treat after this! 🍪"],
+                hard: ["Wow, tackling hard stuff while tired — you're amazing! 😮", "Rest is important! Come back to this tomorrow with fresh eyes! 🌅"]
+            },
+            Confused: {
+                easy: ["That's okay to feel confused! Ask your teacher for help! 🙋", "Confusion means your brain is working hard! Keep questioning! 🤔"],
+                medium: ["Feeling confused is the first step to understanding! 💡 Ask for help!", "Don't give up! Watch a video or read again — it will click! 🎯"],
+                hard: ["Hard topics CAN be confusing! Break it into small pieces! 🧩", "You're not alone! Everyone gets confused sometimes. Ask for help! 🤝"]
+            }
+        };
+
+        // ── STATE ──────────────────────────────────────────────
+        let state = {
+            quizSubject: null, quizQIndex: 0, quizScore: 0, quizAnswered: false,
+            mood: '', moodEmoji: '',
+            scores: { math: 0, english: 0, science: 0, history: 0, social: 0 },
+            attempts: { math: 0, english: 0, science: 0, history: 0, social: 0 },
+            feedbackHistory: [],
+            timetable: {}
+        };
+
+        // ── NAV ──────────────────────────────────────────────
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('page-' + id).classList.add('active');
+            const tabs = ['home', 'quiz', 'timetable', 'feedback'];
+            const i = tabs.indexOf(id);
+            if (i >= 0) document.querySelectorAll('.nav-tab')[i].classList.add('active');
+            if (id === 'home') renderHome();
+            if (id === 'timetable') renderTimetable();
+            if (id === 'feedback') renderFeedbackHistory();
+        }
+
+        // ── QUIZ ──────────────────────────────────────────────
+        function startQuiz(subject) {
+            showPage('quiz');
+            state.quizSubject = subject;
+            state.quizQIndex = 0;
+            state.quizScore = 0;
+            state.quizAnswered = false;
+            const meta = SUBJECT_META[subject];
+            document.getElementById('quiz-title').textContent = meta.emoji + ' ' + meta.label + ' Quiz';
+            document.querySelectorAll('.stab').forEach((t, i) => {
+                t.classList.toggle('active', Object.keys(SUBJECT_META)[i] === subject);
+                t.style.background = Object.keys(SUBJECT_META)[i] === subject ? meta.color : '';
+                t.style.color = Object.keys(SUBJECT_META)[i] === subject ? '#fff' : '';
+                t.style.borderColor = Object.keys(SUBJECT_META)[i] === subject ? meta.color : '';
+            });
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const qs = QUESTIONS[state.quizSubject];
+            const c = document.getElementById('quiz-container');
+            if (state.quizQIndex >= qs.length) { showScore(); return; }
+            const q = qs[state.quizQIndex];
+            const pct = Math.round((state.quizQIndex / qs.length) * 100);
+            c.innerHTML = `
+    <div class="quiz-progress"><div class="quiz-bar" style="width:${pct}%"></div></div>
+    <div style="text-align:right;font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:.5rem">
+      ${state.quizQIndex + 1} / ${qs.length}
+    </div>
+    <div class="quiz-q"><span class="q-emoji">${q.e}</span>${q.q}</div>
+    <div class="options" id="options">
+      ${q.opts.map((o, i) => `<button class="opt-btn" id="opt-${i}" onclick="selectAnswer(${i},${q.ans})">${o}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="qfb"></div>
+    <div class="quiz-nav">
+      <button class="q-btn" id="next-btn" onclick="nextQuestion()" style="display:none">Next ➡️</button>
+    </div>`;
+            state.quizAnswered = false;
+        }
+
+        function selectAnswer(chosen, correct) {
+            if (state.quizAnswered) return;
+            state.quizAnswered = true;
+            document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+            const fb = document.getElementById('qfb');
+            if (chosen === correct) {
+                document.getElementById('opt-' + chosen).classList.add('correct');
+                fb.textContent = '✅ Correct! Great job!'; fb.className = 'quiz-feedback show good';
+                state.quizScore++;
+            } else {
+                document.getElementById('opt-' + chosen).classList.add('wrong');
+                document.getElementById('opt-' + correct).classList.add('correct');
+                const qs = QUESTIONS[state.quizSubject];
+                fb.textContent = '❌ Oops! The answer was: ' + qs[state.quizQIndex].opts[correct];
+                fb.className = 'quiz-feedback show bad';
+            }
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            state.quizQIndex++;
+            renderQuestion();
+        }
+
+        function showScore() {
+            const qs = QUESTIONS[state.quizSubject];
+            const meta = SUBJECT_META[state.quizSubject];
+            const pct = Math.round((state.quizScore / qs.length) * 100);
+            state.scores[state.quizSubject] = Math.max(state.scores[state.quizSubject], pct);
+            state.attempts[state.quizSubject]++;
+            let stars = ''; if (pct >= 80) stars = '⭐⭐⭐'; else if (pct >= 50) stars = '⭐⭐'; else stars = '⭐';
+            let msg = '';
+            if (pct === 100) msg = '🎉 PERFECT SCORE! You are a genius!';
+            else if (pct >= 80) msg = '🌟 Wonderful! You did amazing!';
+            else if (pct >= 60) msg = '👍 Good job! A little more practice!';
+            else if (pct >= 40) msg = '😊 Keep trying — you got this!';
+            else msg = '💪 Don\'t give up! Practice makes perfect!';
+            document.getElementById('quiz-container').innerHTML = `
+    <div class="score-box">
+      <div class="trophy">🏆</div>
+      <div class="score-num">${state.quizScore}/${qs.length}</div>
+      <div class="stars">${stars}</div>
+      <div class="score-msg">${msg}</div>
+      <p style="color:var(--muted);font-weight:700;margin-bottom:1.5rem">Score: ${pct}%</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <button class="q-btn" onclick="startQuiz('${state.quizSubject}')">🔄 Try Again</button>
+        <button class="q-btn" style="background:linear-gradient(135deg,#51cf66,#2f9e44)" onclick="showPage('home')">🏠 Home</button>
+      </div>
+    </div>`;
+            localStorage.setItem('studypal-scores', JSON.stringify(state.scores));
+            localStorage.setItem('studypal-attempts', JSON.stringify(state.attempts));
+        }
+
+        // ── TIMETABLE ──────────────────────────────────────────────
+        const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        const TIMES = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM'];
+        const SUBJECTS_OPT = ['Free', 'Maths', 'English', 'Science', 'History', 'Social'];
+        const COLOR_MAP = { Free: 'free-c', Maths: 'math-c', English: 'eng-c', Science: 'sci-c', History: 'his-c', Social: 'soc-c' };
+
+        function renderTimetable() {
+            const saved = JSON.parse(localStorage.getItem('studypal-tt') || '{}');
+            state.timetable = saved;
+            const g = document.getElementById('tt-grid');
+            let html = '<div class="tt-head"></div>';
+            DAYS.forEach(d => html += `<div class="tt-head">${d}</div>`);
+            TIMES.forEach(t => {
+                html += `<div class="tt-time">${t}</div>`;
+                DAYS.forEach(d => {
+                    const key = d + '-' + t;
+                    const val = saved[key] || 'Free';
+                    const cls = COLOR_MAP[val] || 'free-c';
+                    html += `<div class="tt-cell ${cls}" id="cell-${key}">
+        <select onchange="updateCell('${key}',this)">
+          ${SUBJECTS_OPT.map(s => `<option${s === val ? ' selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </div>`;
+                });
+            });
+            g.innerHTML = html;
+        }
+
+        function updateCell(key, sel) {
+            state.timetable[key] = sel.value;
+            const cls = COLOR_MAP[sel.value] || 'free-c';
+            const cell = document.getElementById('cell-' + key);
+            cell.className = 'tt-cell ' + cls;
+        }
+
+        function saveTimetable() {
+            localStorage.setItem('studypal-tt', JSON.stringify(state.timetable));
+            const msg = document.getElementById('tt-msg');
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 2500);
+        }
+
+        function clearTimetable() {
+            if (!confirm('Clear the whole timetable?')) return;
+            state.timetable = {};
+            localStorage.removeItem('studypal-tt');
+            renderTimetable();
+        }
+
+        // ── FEEDBACK ──────────────────────────────────────────────
+        function selectMood(btn, emoji, label) {
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            state.mood = label; state.moodEmoji = emoji;
+        }
+
+        function submitFeedback() {
+            const subj = document.getElementById('fb-subject').value;
+            const diff = parseInt(document.getElementById('fb-difficulty').value);
+            const notes = document.getElementById('fb-notes').value.trim();
+            if (!subj) { alert('Please select a subject! 📚'); return; }
+            if (!state.mood) { alert('Please select your mood! 😊'); return; }
+
+            const diffLabel = diff <= 2 ? 'easy' : diff === 3 ? 'medium' : 'hard';
+            const pool = AI_FEEDBACK[state.mood]?.[diffLabel] || ["Keep up the great work! 🌟"];
+            const text = pool[Math.floor(Math.random() * pool.length)];
+
+            const box = document.getElementById('ai-feedback-box');
+            document.getElementById('ai-fb-text').textContent = text;
+            box.classList.add('show');
+
+            // Save to history
+            const entry = { subj, diff, mood: state.moodEmoji + ' ' + state.mood, notes, text, date: new Date().toLocaleDateString() };
+            state.feedbackHistory.unshift(entry);
+            const saved = JSON.parse(localStorage.getItem('studypal-fb') || '[]');
+            saved.unshift(entry);
+            localStorage.setItem('studypal-fb', JSON.stringify(saved.slice(0, 20)));
+            renderFeedbackHistory();
+        }
+
+        function renderFeedbackHistory() {
+            const saved = JSON.parse(localStorage.getItem('studypal-fb') || '[]');
+            const hist = document.getElementById('fb-history');
+            if (!saved.length) { hist.innerHTML = ''; return; }
+            hist.innerHTML = `<h3>📋 Recent Feedback (${saved.length})</h3>` + saved.slice(0, 5).map(e => `
+    <div class="fb-card">
+      <div>
+        <strong>${e.subj}</strong> &nbsp;|&nbsp; ${e.mood} &nbsp;|&nbsp; Difficulty: ${'⭐'.repeat(e.diff)}
+        ${e.notes ? `<p>${e.notes}</p>` : ''}
+        <p style="color:#6c63ff;margin-top:.3rem;font-size:.85rem">🤖 ${e.text}</p>
+      </div>
+      <span style="font-size:.75rem;color:var(--muted);white-space:nowrap">${e.date}</span>
+    </div>`).join('');
+        }
+
+        // ── HOME – Progress & Badges ───────────────────────────
+        function renderHome() {
+            const scores = JSON.parse(localStorage.getItem('studypal-scores') || '{}');
+            const attempts = JSON.parse(localStorage.getItem('studypal-attempts') || '{}');
+            Object.assign(state.scores, scores);
+            Object.assign(state.attempts, attempts);
+
+            // Progress cards
+            const po = document.getElementById('progress-overview');
+            po.innerHTML = Object.entries(SUBJECT_META).map(([k, m]) => {
+                const sc = state.scores[k] || 0;
+                const at = state.attempts[k] || 0;
+                return `<div class="prog-card">
+      <div class="p-emoji">${m.emoji}</div>
+      <div class="p-name">${m.label}</div>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${sc}%;background:${m.color}"></div></div>
+      <div class="p-score">${sc}% &bull; ${at} quiz${at !== 1 ? 'zes' : ''}</div>
+    </div>`;
+            }).join('');
+
+            // Badges
+            const badges = [
+                { emoji: '🏆', label: '100% Club', earned: Object.values(state.scores).some(s => s === 100) },
+                { emoji: '🔥', label: '5 in a Row', earned: Object.values(state.attempts).some(a => a >= 5) },
+                { emoji: '🌟', label: 'All Subjects', earned: Object.keys(SUBJECT_META).every(k => state.attempts[k] > 0) },
+                { emoji: '🧠', label: 'Math Pro', earned: state.scores.math >= 80 },
+                { emoji: '📚', label: 'Bookworm', earned: state.scores.english >= 80 },
+                { emoji: '🔬', label: 'Scientist', earned: state.scores.science >= 80 },
+                { emoji: '🏛️', label: 'Historian', earned: state.scores.history >= 80 },
+                { emoji: '🌍', label: 'Explorer', earned: state.scores.social >= 80 },
+            ];
+            document.getElementById('badges-row').innerHTML = badges.map(b => `
+    <div class="badge ${b.earned ? 'earned' : 'locked'}">
+      ${b.emoji}<span>${b.label}</span>
+    </div>`).join('');
+        }
+
+        // ── INIT ──────────────────────────────────────────────
+        renderHome();
+        renderFeedbackHistory();
+        renderTimetable();
+    </script>
+</body>
+
+</html>
